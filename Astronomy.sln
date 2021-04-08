@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Astronomy", "Astronomy\Astronomy.csproj", "{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProg", "TestProg\TestProg.csproj", "{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9137D6C-23CA-48DC-B5E3-EEF75BA7C098}
+	EndGlobalSection
+EndGlobal
