@@ -6,7 +6,7 @@ namespace Astronomy
 {
     public class Planet
     {
-        public string Name { get; internal set; }
+        public PlanetName Name { get; internal set; }
 
         public double M0 { get; internal set; }
 
@@ -32,7 +32,7 @@ namespace Astronomy
 
         public double Eps { get; internal set; }
 
-        public Planet(string name, double m0, double m1, double theta0, double theta1,
+        public Planet(PlanetName name, double m0, double m1, double theta0, double theta1,
             double c1, double c2, double c3, double c4, double c5, double c6, double p, double eps)
         {
             Name = name;
