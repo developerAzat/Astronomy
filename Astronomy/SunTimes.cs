@@ -2,7 +2,7 @@
 
 namespace Astronomy
 {
-    public class Body
+    public class SunTimes
     {
         /// <summary>
         /// Sunrise time

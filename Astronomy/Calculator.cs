@@ -103,7 +103,7 @@ namespace Astronomy
         ///<param name="lng">Longtitude</param>
         ///<param name="height">Optional height</param>
         ///<returns>A Body class with sun times</returns>
-        static public Body GetTimes(DateTime date, double lat, double lng, double height = 0)
+        static public SunTimes GetTimes(DateTime date, double lat, double lng, double height = 0)
         {
             double lw = rad * -lng,
                    phi = rad * lat,
@@ -119,7 +119,7 @@ namespace Astronomy
 
                    Jnoon = SolarTransitJ(ds, M, L);
 
-            Body result = new Body()
+            SunTimes result = new SunTimes()
             {
                 SolarNoon = FromJulian(Jnoon),
                 Nadir = FromJulian(Jnoon - 0.5),
