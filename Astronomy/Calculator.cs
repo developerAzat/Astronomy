@@ -6,7 +6,7 @@ namespace Astronomy
 {
     public class Calculator
     {
-        static readonly double rad = Math.PI / 180;
+        public static readonly double rad = Math.PI / 180;
 
         static readonly double dayMs = 1000 * 60 * 60 * 24,
                J1970 = 2440588,
@@ -40,13 +40,13 @@ namespace Astronomy
 
         #endregion
 
-        static readonly Func<DateTime,double> ToJulian = (DateTime date) => new DateTimeOffset(date).ToUnixTimeMilliseconds() / dayMs - 0.5 + J1970;
+        static readonly Func<DateTime, double> ToJulian = (DateTime date) => new DateTimeOffset(date).ToUnixTimeMilliseconds() / dayMs - 0.5 + J1970;
 
         //static readonly Func<double, DateTime> FromJulian = (double j) => new DateTime((long)(((j + 0.5 - J1970)* 10000) * dayMs),DateTimeKind.Utc);
 
         static readonly Func<double, DateTime> FromJulian = (double j) => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds((j + 0.5 - J1970) * dayMs).ToLocalTime();
 
-        static readonly Func<DateTime, double> ToDays = (DateTime date) => ToJulian(date) - J2000;
+        public static readonly Func<DateTime, double> ToDays = (DateTime date) => ToJulian(date) - J2000;
 
         #region calculations for sun times
 
@@ -60,7 +60,7 @@ namespace Astronomy
 
         static readonly Func<double, double, double, double> HourAngle = (double h, double phi, double d) => Math.Acos((Math.Sin(h) - Math.Sin(phi) * Math.Sin(d)) / (Math.Cos(phi) * Math.Cos(d)));
 
-        static readonly Func<double,double> ObserverAngle = (double height) => -2.076 * Math.Sqrt(height) / 60;
+        static readonly Func<double, double> ObserverAngle = (double height) => -2.076 * Math.Sqrt(height) / 60;
 
         #endregion
 
@@ -94,7 +94,7 @@ namespace Astronomy
             double Jset = GetSetJ(h0, lw, phi, dec, n, M, L);
             double Jrise = Jnoon - (Jset - Jnoon);
 
-            return new Tuple<DateTime, DateTime>(FromJulian(Jrise),FromJulian(Jset));
+            return new Tuple<DateTime, DateTime>(FromJulian(Jrise), FromJulian(Jset));
         }
 
         static public Body GetTimes(DateTime date, double lat, double lng, double height = 0)
@@ -172,8 +172,8 @@ namespace Astronomy
 
             return new SunPosition()
             {
-                Altitude = Altitude(H,phi,c.Item1),
-                Azimuth = Azimuth(H,phi,c.Item2)
+                Altitude = Altitude(H, phi, c.Item1),
+                Azimuth = Azimuth(H, phi, c.Item2)
             };
         }
     }
