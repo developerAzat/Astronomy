@@ -23,7 +23,7 @@ Console.WriteLine("Sunset time in Kazan:  " + res.Sunset.Hour.ToString() + ":" +
 ### Sunlight times
 
 ```c#
-Calculator.GetTimes(/*Date*/ date, /*double*/ latitude, /*double*/ longitude, /*double (default=0)*/ height)
+Calculator.GetTimes(/*DateTime*/ date, /*double*/ latitude, /*double*/ longitude, /*double (default=0)*/ height)
 ```
 
 Returns an object (SunTimes) with the following properties (each is a `DateTime` object):
