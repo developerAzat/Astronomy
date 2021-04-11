@@ -23,6 +23,8 @@ namespace TestProg
             Console.WriteLine(Planets.GetEquationOfCenter(PlanetName.Earth, DateTime.Now));
             Console.WriteLine(Planets.GetSiderealTime(PlanetName.Earth, DateTime.Now, -5));
             Console.WriteLine(Planets.GetEquatorialCoordinates(PlanetName.Earth, DateTime.Now));
+
+            Console.WriteLine(Calculator.GetSunPosition(DateTime.Now, 55.75700, 37.61500).Altitude);
         }
     }
 }
