@@ -6,7 +6,7 @@ namespace Astronomy
 {
     public class MoonCalculator
     {
-        internal static readonly double rad = Math.PI / 180;
+        internal static readonly double rad = General.rad;
 
         #region general moon calculations
 

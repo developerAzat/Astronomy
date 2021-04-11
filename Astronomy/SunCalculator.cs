@@ -6,7 +6,7 @@ namespace Astronomy
 {
     public class SunCalculator
     {
-        internal static readonly double rad = Math.PI / 180;
+        internal static readonly double rad = General.rad;
 
         #region calculations for sun times
 
