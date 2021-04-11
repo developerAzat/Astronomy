@@ -4,47 +4,9 @@ using System.Text;
 
 namespace Astronomy
 {
-    public class Calculator
+    public class SunCalculator
     {
         internal static readonly double rad = Math.PI / 180;
-
-        internal static readonly double dayMs = 1000 * 60 * 60 * 24,
-               J1970 = 2440588,
-               J2000 = 2451545;
-
-        #region general calculations for position
-
-        // general calculations for position
-
-        internal static readonly double e = rad * 23.4397; // obliquity of the Earth
-
-        internal static readonly Func<double, double, double> RightAscension = (double l, double b) => Math.Atan2(Math.Sin(l) * Math.Cos(e) - Math.Tan(b) * Math.Sin(e), Math.Cos(l));
-
-        internal static readonly Func<double, double, double> Declination = (double l, double b) => Math.Asin(Math.Sin(b) * Math.Cos(e) + Math.Cos(b) * Math.Sin(e) * Math.Sin(l));
-
-        internal static readonly Func<double, double, double, double> Azimuth = (double H, double phi, double dec) => Math.Atan2(Math.Sin(H), Math.Cos(H) * Math.Sin(phi) - Math.Tan(dec) * Math.Cos(phi));
-
-        internal static readonly Func<double, double, double, double> Altitude = (double H, double phi, double dec) => Math.Asin(Math.Sin(phi) * Math.Sin(dec) + Math.Cos(phi) * Math.Cos(dec) * Math.Cos(H));
-
-        internal static readonly Func<double, double, double> SiderealTime = (double d, double lw) => rad * (280.16 + 360.9856235 * d) - lw;
-
-        internal static readonly Func<double, double> AstroRefraction = (double h) =>
-        {
-            if (h < 0) // the following formula works for positive altitudes only.
-                h = 0; // if h = -0.08901179 a div/0 would occur.
-
-            return 0.0002967 / Math.Tan(h + 0.00312536 / (h + 0.08901179));
-        };
-
-        #endregion
-
-        internal static readonly Func<DateTime, double> ToJulian = (DateTime date) => new DateTimeOffset(date).ToUnixTimeMilliseconds() / dayMs - 0.5 + J1970;
-
-        //static readonly Func<double, DateTime> FromJulian = (double j) => new DateTime((long)(((j + 0.5 - J1970)* 10000) * dayMs),DateTimeKind.Utc);
-
-        internal static readonly Func<double, DateTime> FromJulian = (double j) => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds((j + 0.5 - J1970) * dayMs).ToLocalTime();
-
-        internal static readonly Func<DateTime, double> ToDays = (DateTime date) => ToJulian(date) - J2000;
 
         #region calculations for sun times
 
@@ -54,7 +16,7 @@ namespace Astronomy
 
         internal static readonly Func<double, double, double, double> ApproxTransit = (double ht, double lw, double n) => J0 + (ht + lw) / (2 * Math.PI) + n;
 
-        internal static readonly Func<double, double, double, double> SolarTransitJ = (double ds, double M, double L) => J2000 + ds + 0.0053 * Math.Sin(M) - 0.0069 * Math.Sin(2 * L);
+        internal static readonly Func<double, double, double, double> SolarTransitJ = (double ds, double M, double L) => General.J2000 + ds + 0.0053 * Math.Sin(M) - 0.0069 * Math.Sin(2 * L);
 
         internal static readonly Func<double, double, double, double> HourAngle = (double h, double phi, double d) => Math.Acos((Math.Sin(h) - Math.Sin(phi) * Math.Sin(d)) / (Math.Cos(phi) * Math.Cos(d)));
 
@@ -92,7 +54,7 @@ namespace Astronomy
             double Jset = GetSetJ(h0, lw, phi, dec, n, M, L);
             double Jrise = Jnoon - (Jset - Jnoon);
 
-            return new Tuple<DateTime, DateTime>(FromJulian(Jrise), FromJulian(Jset));
+            return new Tuple<DateTime, DateTime>(General.FromJulian(Jrise), General.FromJulian(Jset));
         }
 
         ///<summary>
@@ -109,20 +71,20 @@ namespace Astronomy
                    phi = rad * lat,
                    dh = ObserverAngle(height),
 
-                   d = ToDays(date),
+                   d = General.ToDays(date),
                    n = JulianCycle(d, lw),
                    ds = ApproxTransit(0, lw, n),
 
                    M = SolarMeanAnomaly(ds),
                    L = EclipticLongitude(M),
-                   dec = Declination(L, 0),
+                   dec = General.Declination(L, 0),
 
                    Jnoon = SolarTransitJ(ds, M, L);
 
             SunTimes result = new SunTimes()
             {
-                SolarNoon = FromJulian(Jnoon),
-                Nadir = FromJulian(Jnoon - 0.5),
+                SolarNoon = General.FromJulian(Jnoon),
+                Nadir = General.FromJulian(Jnoon - 0.5),
             };
 
             Tuple<DateTime, DateTime> temp = GetTimesCalculate(-0.833, lw, phi, dec, n, M, L, dh, Jnoon);
@@ -158,28 +120,28 @@ namespace Astronomy
             return result;
         }
 
-        static private Tuple<double, double> SunCoords(double d)
+        static public (double dec, double asc) SunCoords(double d)
         {
             double M = SolarMeanAnomaly(d),
                    L = EclipticLongitude(M);
 
-            return new Tuple<double, double>(Declination(L, 0), RightAscension(L, 0));
+            return (dec: General.Declination(L, 0), asc: General.RightAscension(L, 0));
         }
 
         static public SunPosition GetSunPosition(DateTime date, double lat, double lng)
         {
             double lw = rad * -lng,
                    phi = rad * lat,
-                   d = ToDays(date);
+                   d = General.ToDays(date);
 
             var c = SunCoords(d);
 
-            double H = SiderealTime(d, lw) - c.Item2;
+            double H = General.SiderealTime(d, lw) - c.asc;
 
             return new SunPosition()
             {
-                Altitude = Altitude(H, phi, c.Item1),
-                Azimuth = Azimuth(H, phi, c.Item2)
+                Altitude = General.Altitude(H, phi, c.dec),
+                Azimuth = General.Azimuth(H, phi, c.dec)
             };
         }
     }
