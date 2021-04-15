@@ -27,7 +27,7 @@ namespace Astronomy
 
         #endregion
 
-        internal static readonly Func<DateTime, double, double> Hours = (DateTime date, double h) => new DateTimeOffset(date).ToUnixTimeMilliseconds() + h * dayMs / 24;
+        internal static readonly Func<DateTime, double, DateTime> HoursLater = (DateTime date, double h) => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(new DateTimeOffset(date).ToUnixTimeMilliseconds() + h* dayMs / 24).ToLocalTime();
 
         static private (double dec, double asc, double dist) MoonCoords(double d)
         {
@@ -79,6 +79,67 @@ namespace Astronomy
                 - Math.Cos(s.dec) * Math.Sin(m.dec) * Math.Cos(s.asc - m.asc));
 
             return new Tuple<double, double, double>(Fraction(inc), Phase(inc, angle), angle);
+        }
+
+        // calculations for moon rise/set times are based on http://www.stargazing.net/kepler/moonrise.html article
+
+        static public MoonTimes GetTimes(DateTime date, double lat, double lng)
+        {
+            var t = date.Date;
+
+            double hc = 0.133 * rad,
+                h0 = GetMoonPosition(t, lat, lng).Altitude - hc,
+                h1, h2, rise = 0, set = 0, a, b, xe, ye = 0, d, roots, x1 = 0, x2 = 0, dx;
+
+            for(int i = 1; i <= 24; i+=2)
+            {
+                h1 = GetMoonPosition(HoursLater(t, i), lat, lng).Altitude - hc;
+                h2 = GetMoonPosition(HoursLater(t, i + 1), lat, lng).Altitude - hc;
+
+                a = (h0 + h2) / 2 - h1;
+                b = (h2 - h0) / 2;
+                xe = -b / (2 * a);
+                ye = (a * xe + b) * xe + h1;
+                d = b * b - 4 * a * h1;
+                roots = 0;
+
+                if (d >= 0)
+                {
+                    dx = Math.Sqrt(d) / (Math.Abs(a) * 2);
+                    x1 = xe - dx;
+                    x2 = xe + dx;
+                    if (Math.Abs(x1) <= 1) roots++;
+                    if (Math.Abs(x2) <= 1) roots++;
+                    if (x1 < -1) x1 = x2;
+                }
+
+                if (roots == 1)
+                {
+                    if (h0 < 0)
+                    {
+                        rise = (double)i + x1;
+                    }
+                    else set = i + x1;
+
+                }
+                else if (roots == 2)
+                {
+                    rise = i + (ye < 0 ? x2 : x1);
+                    set = i + (ye < 0 ? x1 : x2);
+                }
+
+                if (rise != 0 && set != 0) break;
+
+                h0 = h2;
+            }
+
+            return new MoonTimes()
+            {
+                Rise = rise != 0 ? HoursLater(t, rise) : new DateTime(),
+                Set = set !=0 ? HoursLater(t,set) : new DateTime(),
+                AlwaysUp = ye > 0,
+                AlwaysDown = ye <= 0
+            };
         }
     }
 }

@@ -19,6 +19,11 @@ namespace TestProg
             Console.WriteLine("Sunset time in Kazan:  " + res.Sunset.Hour.ToString() + ":" + res.Sunset.Minute.ToString() + ":" + res.Sunset.Second.ToString());
 
 
+            var moontimes = MoonCalculator.GetTimes(DateTime.Now, 55.80030, 49.10827);
+
+            Console.WriteLine("Moonrise time in Kazan:  " + moontimes.Rise.Hour.ToString() + ":" + moontimes.Rise.Minute.ToString() + ":" + moontimes.Rise.Second.ToString());
+            Console.WriteLine("Moonset time in Kazan:  " + moontimes.Set.Hour.ToString() + ":" + moontimes.Set.Minute.ToString() + ":" + moontimes.Set.Second.ToString());
+
             Console.WriteLine(Planets.GetMeanAnomaly(PlanetName.Earth, DateTime.Now));
             Console.WriteLine(Planets.GetEquationOfCenter(PlanetName.Earth, DateTime.Now));
             Console.WriteLine(Planets.GetSiderealTime(PlanetName.Earth, DateTime.Now, -5));
