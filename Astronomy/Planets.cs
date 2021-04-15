@@ -21,7 +21,8 @@ namespace Astronomy
         public static double GetMeanAnomaly(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
-            double calcDate = General.ToDays(date),
+          
+            double calcDate = BaseCalculator.ToDays(date),
                 M = planet.M0 + planet.M1 * calcDate;
 
             return Math.Round(M % 360, 4);
@@ -30,7 +31,8 @@ namespace Astronomy
         public static double GetEquationOfCenter(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
-            double M = GetMeanAnomaly(planetName, date) * General.rad;
+
+            double M = GetMeanAnomaly(planetName, date) * BaseCalculator.rad;
            
             double eq = planet.C1 * Math.Sin(M) + planet.C2 * Math.Sin(2 * M) + planet.C3 * Math.Sin(3 * M) +
                 planet.C4 * Math.Sin(4 * M) + planet.C5 * Math.Sin(5 * M) + planet.C6 * Math.Sin(6 * M);
@@ -41,7 +43,8 @@ namespace Astronomy
         public static double GetSiderealTime(PlanetName planetName, DateTime date, double lw)
         {
             Planet planet = getPlanet(planetName);
-            double calcDate = General.ToDays(date),
+          
+            double calcDate = BaseCalculator.ToDays(date),
                 theta = planet.Theta0 + planet.Theta1 * calcDate - lw;
 
             return Math.Round(theta % 360, 4);
@@ -58,14 +61,15 @@ namespace Astronomy
         public static Tuple<double, double> GetEquatorialCoordinates(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
-            double eclLng = getEclipticalCoordinates(planetName, date) * General.rad,
-                eps = planet.Eps * General.rad;
+
+            double eclLng = getEclipticalCoordinates(planetName, date) * BaseCalculator.rad,
+                eps = planet.Eps * BaseCalculator.rad;
 
             // right ascension
-            double alpha = Math.Atan2(Math.Sin(eclLng) * Math.Cos(eps), Math.Cos(eclLng)) / General.rad;
+            double alpha = Math.Atan2(Math.Sin(eclLng) * Math.Cos(eps), Math.Cos(eclLng)) / BaseCalculator.rad;
 
             // declination
-            double delta = Math.Asin(Math.Sin(eclLng) * Math.Sin(eps)) / General.rad;
+            double delta = Math.Asin(Math.Sin(eclLng) * Math.Sin(eps)) / BaseCalculator.rad;
 
             return new Tuple<double, double>(Math.Round(alpha, 4), Math.Round(delta, 4));
         }
