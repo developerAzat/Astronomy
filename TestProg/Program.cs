@@ -25,6 +25,15 @@ namespace TestProg
             Console.WriteLine(Planets.GetEquatorialCoordinates(PlanetName.Earth, DateTime.Now));
 
             Console.WriteLine(SunCalculator.GetSunPosition(DateTime.Now, 55.75700, 37.61500).Altitude);
+
+            Console.WriteLine(MoonCalculator.GetMoonIllumination(DateTime.Now));
+
+            var resMoon = MoonCalculator.GetMoonPosition(DateTime.Now, 5, 10);
+            var props = resMoon.GetType().GetProperties();
+            foreach (var field in props)
+            {
+                Console.WriteLine(field.GetValue(resMoon));
+            }
         }
     }
 }

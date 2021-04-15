@@ -21,6 +21,7 @@ namespace Astronomy
         public static double GetMeanAnomaly(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
+          
             double calcDate = BaseCalculator.ToDays(date),
                 M = planet.M0 + planet.M1 * calcDate;
 
@@ -30,6 +31,7 @@ namespace Astronomy
         public static double GetEquationOfCenter(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
+
             double M = GetMeanAnomaly(planetName, date) * BaseCalculator.rad;
            
             double eq = planet.C1 * Math.Sin(M) + planet.C2 * Math.Sin(2 * M) + planet.C3 * Math.Sin(3 * M) +
@@ -41,6 +43,7 @@ namespace Astronomy
         public static double GetSiderealTime(PlanetName planetName, DateTime date, double lw)
         {
             Planet planet = getPlanet(planetName);
+          
             double calcDate = BaseCalculator.ToDays(date),
                 theta = planet.Theta0 + planet.Theta1 * calcDate - lw;
 
@@ -58,6 +61,7 @@ namespace Astronomy
         public static Tuple<double, double> GetEquatorialCoordinates(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
+
             double eclLng = getEclipticalCoordinates(planetName, date) * BaseCalculator.rad,
                 eps = planet.Eps * BaseCalculator.rad;
 

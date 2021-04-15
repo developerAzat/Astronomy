@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Astronomy
 {
+
     public class SunCalculator : BaseCalculator
     {
         #region calculations for sun times
@@ -118,28 +119,29 @@ namespace Astronomy
             return result;
         }
 
-        static private Tuple<double, double> SunCoords(double d)
+        static public (double dec, double asc) SunCoords(double d)
         {
             double M = SolarMeanAnomaly(d),
                    L = EclipticLongitude(M);
 
-            return new Tuple<double, double>(Declination(L, 0), RightAscension(L, 0));
+            return (dec: Declination(L, 0), asc: RightAscension(L, 0));
         }
 
         static public SunPosition GetSunPosition(DateTime date, double lat, double lng)
         {
             double lw = rad * -lng,
                    phi = rad * lat,
+                   
                    d = ToDays(date);
 
             var c = SunCoords(d);
 
-            double H = SiderealTime(d, lw) - c.Item2;
+            double H = SiderealTime(d, lw) - c.asc;
 
             return new SunPosition()
             {
-                Altitude = Altitude(H, phi, c.Item1),
-                Azimuth = Azimuth(H, phi, c.Item2)
+                Altitude = Altitude(H, phi, c.dec),
+                Azimuth = Azimuth(H, phi, c.dec)
             };
         }
     }
