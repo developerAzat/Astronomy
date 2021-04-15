@@ -18,7 +18,7 @@ namespace Astronomy
 
         internal static readonly double e = rad * 23.4397; // obliquity of the Earth
 
-        internal static readonly Func<double, double, double> RightAscension = (double l, double b) => Math.Atan2(Math.Asin(l) * Math.Cos(e) - Math.Tan(b) * Math.Asin(e), Math.Cos(l));
+        internal static readonly Func<double, double, double> RightAscension = (double l, double b) => Math.Atan2(Math.Sin(l) * Math.Cos(e) - Math.Tan(b) * Math.Sin(e), Math.Cos(l));
 
         internal static readonly Func<double, double, double> Declination = (double l, double b) => Math.Asin(Math.Sin(b) * Math.Cos(e) + Math.Cos(b) * Math.Sin(e) * Math.Sin(l));
 

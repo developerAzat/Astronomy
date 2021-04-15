@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Astronomy
 {
-    public class MoonCalculator
+    public class MoonCalculator : BaseCalculator
     {
-        internal static readonly double rad = General.rad;
 
         #region general moon calculations
 
@@ -28,7 +27,7 @@ namespace Astronomy
 
         #endregion
 
-        internal static readonly Func<DateTime, double, double> Hours = (DateTime date, double h) => new DateTimeOffset(date).ToUnixTimeMilliseconds() + h * General.dayMs / 24;
+        internal static readonly Func<DateTime, double, double> Hours = (DateTime date, double h) => new DateTimeOffset(date).ToUnixTimeMilliseconds() + h * dayMs / 24;
 
         static private (double dec, double asc, double dist) MoonCoords(double d)
         {
@@ -40,27 +39,27 @@ namespace Astronomy
                 b = Latitude(F),
                 dt = Distance(M);
 
-            return (dec: General.Declination(L, 0), asc: General.RightAscension(L, 0), dist: dt);
+            return (dec: Declination(L, 0), asc: RightAscension(L, 0), dist: dt);
         }
 
         static public MoonPosition GetMoonPosition(DateTime date, double lat, double lng)
         {
             double lw = rad * -lng,
                    phi = rad * lat,
-                   d = General.ToDays(date);
+                   d = ToDays(date);
 
             var c = MoonCoords(d);
 
-            double H = General.SiderealTime(d, lw) - c.asc,
-                h = General.Altitude(H, phi, c.dec),
+            double H = SiderealTime(d, lw) - c.asc,
+                h = Altitude(H, phi, c.dec),
                 pa = Math.Atan2(Math.Sin(H), Math.Tan(phi) * Math.Cos(c.dec) - Math.Sin(c.dec) * Math.Cos(H));
 
-            h = General.AstroRefraction(h);
+            h = AstroRefraction(h);
 
             return new MoonPosition()
             {
                 Altitude = h,
-                Azimuth = General.Azimuth(H, phi, c.dec),
+                Azimuth = Azimuth(H, phi, c.dec),
                 Distance = c.dist,
                 ParallacticAngle = pa
             };
@@ -68,7 +67,7 @@ namespace Astronomy
 
         static public Tuple<double, double, double> GetMoonIllumination(DateTime date)
         {
-            double d = General.ToDays(date);
+            double d = ToDays(date);
             var s = SunCalculator.SunCoords(d);
             var m = MoonCoords(d);
 
