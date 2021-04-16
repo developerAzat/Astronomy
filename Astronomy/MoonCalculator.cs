@@ -117,7 +117,7 @@ namespace Astronomy
                 {
                     if (h0 < 0)
                     {
-                        rise = (double)i + x1;
+                        rise = i + x1;
                     }
                     else set = i + x1;
 
