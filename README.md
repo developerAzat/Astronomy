@@ -8,12 +8,12 @@ Most calculations are based on the formulas given in the excellent Astronomy Ans
 
 ```C#
 //Moscow
-var res = Calculator.GetTimes(DateTime.Now, 55.75700, 37.61500);
+var res = SunCalculator.GetTimes(DateTime.Now, 55.75700, 37.61500);
 
 Console.WriteLine("Sunrise time in Moscow:  " + res.Sunrise.Hour.ToString() + ":" + res.Sunrise.Minute.ToString() + ":" + res.Sunrise.Second.ToString());
 Console.WriteLine("Sunset time in Moscow:  " + res.Sunset.Hour.ToString() + ":" + res.Sunset.Minute.ToString() + ":" + res.Sunset.Second.ToString());
 
-res = Calculator.GetTimes(DateTime.Now, 55.80030, 49.10827);
+res = SunCalculator.GetTimes(DateTime.Now, 55.80030, 49.10827);
 
 Console.WriteLine("Sunrise time in Kazan:  " + res.Sunrise.Hour.ToString() + ":" + res.Sunrise.Minute.ToString() + ":" + res.Sunrise.Second.ToString());
 Console.WriteLine("Sunset time in Kazan:  " + res.Sunset.Hour.ToString() + ":" + res.Sunset.Minute.ToString() + ":" + res.Sunset.Second.ToString());
@@ -23,7 +23,7 @@ Console.WriteLine("Sunset time in Kazan:  " + res.Sunset.Hour.ToString() + ":" +
 ### Sunlight times
 
 ```C#
-Calculator.GetTimes(/*DateTime*/ date, /*double*/ latitude, /*double*/ longitude, /*double (default=0)*/ height)
+SunCalculator.GetTimes(/*DateTime*/ date, /*double*/ latitude, /*double*/ longitude, /*double (default=0)*/ height)
 ```
 
 Returns an object (SunTimes) with the following properties (each is a `DateTime` object):
