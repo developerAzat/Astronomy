@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Astronomy", "Astronomy\Astronomy.csproj", "{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProg", "TestProg\TestProg.csproj", "{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3420053-FB4A-48C5-8C17-C470DC9E1D8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACA4EB61-8198-4A9C-89BB-A25B060AB1BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
