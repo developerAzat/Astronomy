@@ -4,8 +4,14 @@ using System.Linq;
 
 namespace Astronomy
 {
+    /// <summary>
+    /// The class contains different methods that allow to calculate astronomical properties of the planet.
+    /// </summary>
     public class Planets
     {
+        /// <summary>
+        /// List of planets with astronomical constants.
+        /// </summary>
         static readonly Planet[] planets = new Planet[]
         {
             new Planet(PlanetName.Mercury, 174.7948, 4.09233445, 132.3282, 6.1385025, 23.4400, 2.9818, 0.5255, 0.1058, 0.0241, 0.0055, 230.3265, 0.0351),
@@ -18,6 +24,14 @@ namespace Astronomy
             new Planet(PlanetName.Neptune, 256.2250, 0.00598103, 52.4160, 536.3128662, 1.0302, 0.0058, 0, 0, 0, 0, 182.2100, 27.8477)
         };
 
+        /// <summary>
+        /// Calculates the mean anomaly of the planet.
+        /// </summary>
+        /// <returns>
+        /// The mean anomaly of the planet.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
+        /// <param name="date">Date.</param>
         public static double GetMeanAnomaly(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
@@ -28,6 +42,14 @@ namespace Astronomy
             return Math.Round(M % 360, 4);
         }
 
+        /// <summary>
+        /// Calculates the equation of center of the planet.
+        /// </summary>
+        /// <returns>
+        /// The difference between the true anomaly and the mean anomaly.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
+        /// <param name="date">Date.</param>
         public static double GetEquationOfCenter(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
@@ -40,6 +62,15 @@ namespace Astronomy
             return Math.Round(eq, 4);
         }
 
+        /// <summary>
+        /// Calculates the sidereal time of the planet.
+        /// </summary>
+        /// <returns>
+        /// The sidereal time of the planet.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
+        /// <param name="date">Date.</param>
+        /// <param name="lw">Longtitude of the location.</param>
         public static double GetSiderealTime(PlanetName planetName, DateTime date, double lw)
         {
             Planet planet = getPlanet(planetName);
@@ -50,6 +81,14 @@ namespace Astronomy
             return Math.Round(theta % 360, 4);
         }
 
+        /// <summary>
+        /// Calculates ecliptical coordinates of the planet.
+        /// </summary>
+        /// <returns>
+        /// The ecliptic longitude of the planet as seen from the Sun.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
+        /// <param name="date">Date.</param>
         public static double getEclipticalCoordinates(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
@@ -58,6 +97,14 @@ namespace Astronomy
             return Math.Round(eclLng % 360, 4);
         }
 
+        /// <summary>
+        /// Calculates equatorial coordinates of the planet.
+        /// </summary>
+        /// <returns>
+        /// The right ascension and the declination of the planet.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
+        /// <param name="date">Date.</param>
         public static Tuple<double, double> GetEquatorialCoordinates(PlanetName planetName, DateTime date)
         {
             Planet planet = getPlanet(planetName);
@@ -74,6 +121,13 @@ namespace Astronomy
             return new Tuple<double, double>(Math.Round(alpha, 4), Math.Round(delta, 4));
         }
 
+        /// <summary>
+        /// Gets planet by given name.
+        /// </summary>
+        /// <returns>
+        /// The instance of the planet.
+        /// </returns>
+        /// <param name="planetName">Solar System planet name.</param>
         static Planet getPlanet(PlanetName planetName)
         {
             return planets.SingleOrDefault(item => item.Name == planetName);
