@@ -4,6 +4,17 @@ Astronomy is a tiny .net standart 2.0 library for calculating sun position, sunl
 
 Most calculations are based on the formulas given in the excellent Astronomy Answers articles about position of the sun and the planets.
 
+## NuGet
+You can download the package from NuGet Package Manager
+#Pacakage Manager
+```bash
+Install-Package Astronomy -Version 1.0.0
+```
+#.NET CLI
+```bash
+dotnet add package Astronomy --version 1.0.0
+```
+
 ## Usage example
 
 ```C#
