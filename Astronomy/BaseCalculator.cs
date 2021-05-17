@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Astronomy
 {
+    /// <summary>
+    /// Base method for calculation
+    /// </summary>
     public class BaseCalculator
     {
         internal static readonly double rad = Math.PI / 180;
