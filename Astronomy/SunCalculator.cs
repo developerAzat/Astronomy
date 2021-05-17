@@ -52,6 +52,11 @@ namespace Astronomy
 
             double Jset = GetSetJ(h0, lw, phi, dec, n, M, L);
             double Jrise = Jnoon - (Jset - Jnoon);
+            
+            if (Jset is Double.NaN || Jrise is Double.NaN)
+            {
+                return null;
+            }
 
             return new Tuple<DateTime, DateTime>(FromJulian(Jrise), FromJulian(Jset));
         }
@@ -88,33 +93,51 @@ namespace Astronomy
 
             Tuple<DateTime, DateTime> temp = GetTimesCalculate(-0.833, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.Sunrise = temp.Item1;
-            result.Sunset = temp.Item2;
+            if (temp != null)
+            {
+                result.Sunrise = temp.Item1;
+                result.Sunset = temp.Item2;
+            }
 
             temp = GetTimesCalculate(-0.3, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.SunriseEnd = temp.Item1;
-            result.SunsetStart = temp.Item2;
+            if (temp != null)
+            {
+                result.SunriseEnd = temp.Item1;
+                result.SunsetStart = temp.Item2;
+            }
 
             temp = GetTimesCalculate(-6, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.Dawn = temp.Item1;
-            result.Dusk = temp.Item2;
+            if (temp != null)
+            {
+                result.Dawn = temp.Item1;
+                result.Dusk = temp.Item2;
+            }
 
             temp = GetTimesCalculate(-12, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.NauticalDawn = temp.Item1;
-            result.NauticalDusk = temp.Item2;
+            if (temp != null)
+            {
+                result.NauticalDawn = temp.Item1;
+                result.NauticalDusk = temp.Item2;
+            }
 
             temp = GetTimesCalculate(-18, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.NightEnd = temp.Item1;
-            result.Night = temp.Item2;
+            if (temp != null)
+            {
+                result.NightEnd = temp.Item1;
+                result.Night = temp.Item2;
+            }
 
             temp = GetTimesCalculate(6, lw, phi, dec, n, M, L, dh, Jnoon);
 
-            result.GoldenHourEnd = temp.Item1;
-            result.GoldenHour = temp.Item2;
+            if (temp != null)
+            {
+                result.GoldenHourEnd = temp.Item1;
+                result.GoldenHour = temp.Item2;
+            }
 
             return result;
         }
